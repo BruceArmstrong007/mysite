@@ -25,7 +25,7 @@ SECRET_KEY = '1padsbhf3ce_in(uj9ya@attqfwa!(9cjhaefyxjibx=qxjfc2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['venv.kuqvtzvixm.us-east-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['mysite.us-east-2.elasticbeanstalk.com']
 
 
 # Application definition
@@ -106,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
 
 USE_I18N = True
 
@@ -122,6 +122,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media'
+
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
