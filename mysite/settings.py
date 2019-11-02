@@ -25,7 +25,7 @@ SECRET_KEY = '1padsbhf3ce_in(uj9ya@attqfwa!(9cjhaefyxjibx=qxjfc2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.us-east-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -119,9 +119,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'static'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
 
 
 STATICFILES_DIRS = [
