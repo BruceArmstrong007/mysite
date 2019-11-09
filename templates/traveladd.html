@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mysite</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<style>#map{
+  width: 30vw;
+  height: 30vw;
+}</style>
+
+</head>
+<body>
+    <header></header>
+    <main class="container">
+        <h2>Add travel</h2>
+    <form method="post" id="form1" class="needs-validation" action="." enctype="multipart/form-data" novalidate>{% csrf_token %}
+        <div class="form-group">
+            <label for="name"><b>Name<span class="text-danger">*</span>:</b></label>
+            <select  class="form-control select2" id="name" name="name" required>   
+                <option readonly disabled>Select Name..</option>
+                {% for i in name %}
+              <option value="{{ i.name }}">{{ i.name }}</option>
+                  {% endfor %}
+            </select>
+            <div class="valid-feedback">Valid.</div>
+            <div class="invalid-feedback">Please fill out this field.</div>
+         </div >  
+      <div class="row">  
+        <div class="col-8">
+        <div class="form-group">
+                <label for="source"><b>Source<span class="text-danger">*</span>:</b></label>
+                <select  class="form-control select2" id="source" name="source" required>
+                    <option readonly disabled>Select Source..</option>
+                    {% for i in distance %}
+                  <option value="{{ i.address }},{{ i.latitude }},{{ i.longitude }},s">{{ i.address }}</option>
+                      {% endfor %}
+                  </select>                
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>  
+        </div>      
+        <div class="form-group">
+          <label for="destination1"><b>Destination1<span class="text-danger">*</span>:</b></label>
+          <select  class="form-control select2" id="destination1" name="destination1" required>
+              <option readonly disabled>Select Destination..</option>
+            {% for i in distance %}
+              <option value="{{ i.address }},{{ i.latitude }},{{ i.longitude }},d1">{{ i.address }}</option>
+              {% endfor %}
+        </select> 
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div> 
+            <div class="form-group">
+                <label for="destination2"><b>Destination2:</b></label>
+                <select  class="form-control select2" id="destination2" name="destination2" required>
+                    <option readonly value="None">Select Destination..</option>
+                    {% for i in distance %}
+                    <option value="{{ i.address }},{{ i.latitude }},{{ i.longitude }},d2">{{ i.address }}</option>
+                    {% endfor %}
+              </select> 
+                    <div class="valid-feedback">Valid.</div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
+                </div>
+                <div class="form-group">
+                  <label for="destination3"><b>Destination3:</b></label>
+                  <select  class="form-control select2" id="destination3" name="destination3" required>
+                      <option readonly value="None">Select Destination..</option>        
+                      {% for i in distance %}
+                      <option value="{{ i.address }},{{ i.latitude }},{{ i.longitude }},d3">{{ i.address }}</option>
+                      {% endfor %}
+                </select> 
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+                    <div class="form-group">
+                      <label for="destination4"><b>Destination4:</b></label>
+                      <select  class="form-control select2" id="destination4" name="destination4" >
+                          <option readonly value="None">Select Destination..</option>        
+                          {% for i in distance %}
+                          <option value="{{ i.address }},{{ i.latitude }},{{ i.longitude }},d4">{{ i.address }}</option>
+                          {% endfor %}
+                    </select> 
+                            <div class="valid-feedback">Valid.</div>
+                            <div class="invalid-feedback">Please fill out this field.</div>
+                        </div>  
+                  </div>   
+      <div class="col-4"><div class="container" id = "map"></div></div>                
+     </div>                                                         
+        <div class="form-group">
+                <label for="date"><b>Date<span class="text-danger">*</span>:</b></label>
+                <input type="date"  class="form-control" id="date" name="date" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+            <div class="form-group">
+              <div class="row">   
+                <div class="col">
+                    <label for="state"><b>State<span class="text-danger">*</span>:</b></label> 
+                  <select name="state" class="form-control select3" id="state" name="state" required>
+                    <option readonly disabled>Select State..</option>
+                    {% for i in petrol_price  %}
+                    <option value="{{ i.state }},{{ i.petrol_price }}">{{ i.state }} : {{ i.petrol_price }}</option>
+                  {% endfor %}
+                  </select>
+                </div>
+                <div class="col">
+                    <label for="petrol_price"><b>Petrol Price<span class="text-danger">*</span>:</b></label> 
+                <input type="number" step="any" class="form-control" id="petrol_price" name="petrol_price" required>
+                  <div class="valid-feedback">Valid.</div>
+                  <div class="invalid-feedback">Please fill out this field.</div>
+                </div>  
+            </div>
+          </div> 
+            <div class="form-group">
+                <label for="distance"><b>Distance in Km<span class="text-danger">*</span>:</b></label>
+                <input type="number" step="any" class="form-control" id="distance" name="distance" required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+        <div class="form-group">
+                <label for="total_cost"><b>Total cost<span class="text-danger">*</span>:</b></label>
+                <input type="number" step="any" id="total_cost" class="form-control" name="total_cost"  required>
+                <div class="valid-feedback">Valid.</div>
+                <div class="invalid-feedback">Please fill out this field.</div>
+            </div>
+        <div class="form-group">
+                <label for="bill"><b>Bill:</b></label>
+                      <input type="file" class="form-control" name="bill" id="bill" accept=".jpg, .jpeg, .png, .pdf, .gif, .svg" >     
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+       <input type="submit" class="btn btn-outline-success" style="margin:1vw;float:right;" name="Submit">
+    </form>
+    <a class="btn btn-outline-dark" href="/users/tasks/" style="margin:1vw;">Back</a> 
+    <div id="result"></div>         
+    <script>
+                    (function() {
+                      'use strict';
+                      window.addEventListener('load', function() {
+                        // Get the forms we want to add validation styles to
+                        var forms = document.getElementsByClassName('needs-validation');
+                        // Loop over them and prevent submission
+                        var validation = Array.prototype.filter.call(forms, function(form) {
+                          form.addEventListener('submit', function(event) {
+                            if (form.checkValidity() === false) {
+                              event.preventDefault();
+                              event.stopPropagation();
+                            }
+                            form.classList.add('was-validated');
+                          }, false);
+                        });
+                      }, false);
+                    })();
+     </script>
+        <script>
+        $(document).ready(function (e) {
+ $("#form1").on('submit',(function(e) {
+  e.preventDefault();
+  $.ajax({
+         url: "",
+   type: "POST",
+   data:  new FormData(this),
+   contentType: false,
+         cache: false,
+   processData:false,
+    }).done(function(response){ 
+                $("#result").html(response);
+                location.reload();
+              });
+ }));
+});</script>
+        <script>
+        $(document).ready(function(){
+          $('#state').change(function(){
+          var pet = $(this).val().split(",");
+            var dit = $("#distance").val();
+            $('#petrol_price').val( pet[1] );
+            var tot = $(pet[1]*dit);
+            $('#total_cost').val(tot);
+          });
+          $('#petrol_price,#distance').change(function(){
+            var tot = $('#petrol_price').val() * $('#distance').val();
+            $('#total_cost').val(tot);
+          });
+          $(".select2").select2();
+          $(".select3").select2();
+        });
+        </script>       
+    <script>
+        // Creating map options
+        var mapOptions = {
+           center: [12.972442,77.580643],
+           zoom: 10
+        }
+        
+        // Creating a map object
+        var map = new L.map('map', mapOptions);
+        // Creating a Layer object
+        var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+        
+        // Adding layer to the map
+ 
+        map.addLayer(layer);
+var slat = 12.972442;
+var slong = 77.580643;
+var dlat1 = 12.97363;
+var dlong1 = 77.59102;
+var dlat2 = null;
+var dlong2 = null;
+var dlat3 = null;
+var dlong3 = null;
+var dlat4 = null;
+var dlong4 = null;
+var arr = [
+L.latLng(slat,slong),
+L.latLng(dlat1,dlong1),
+
+     ];
+  
+  var  route1=L.Routing.control({
+   waypoints: arr,
+  autoRoute: true,
+  routeWhileDragging: true,
+  addWaypoints: true,
+  draggableWaypoints: true,
+ }).addTo(map);
+
+$(document).ready(function(){
+  $('#source,#destination1,#destination2,#destination3,#destination4').change(function(){
+    var val = $(this).val().split(",");
+    if(val[4]=='s'){
+      var wayPoint1 = L.latLng(12.97363,77.59102);
+var wayPoint2 = L.latLng(val[1], val[2]);
+rWP1 = new L.Routing.Waypoint;
+rWP1.latLng = wayPoint1;    
+
+rWP2 = new L.Routing.Waypoint;
+rWP2.latLng = wayPoint2;    
+myRoute.route([rWP1, rWP2], function(err, routes) {
+    distance = routes[0].summary.totalDistance;
+    console.log('routing distance: ' + distance);
+}).addTo(map);
+    }else if(val[3]=='d1'){
+      d1Marker = L.marker([val[1],val[2]],{ draggable: true }).addTo(map);
+    }else if(val[3]=='d2'){
+      d2Marker = L.marker([val[1],val[2]],{ draggable: true }).addTo(map);
+    }else if(val[3]=='d3'){
+      d3Marker = L.marker([val[1],val[2]],{ draggable: true }).addTo(map);
+
+    }else{
+      d4Marker = L.marker([val[1],val[2]],{ draggable: true }).addTo(map);
+
+    }
+  });
+});
+ </script>
+</main>
+<footer> </footer>
+</body>
+</html>
+<!--    L.latLng(12.972442,77.580643),
+     L.latLng(12.97363, 77.58164),
+ L.latLng(12.97352, 77.58071),
+     L.latLng(12.97729, 77.59102),--> 

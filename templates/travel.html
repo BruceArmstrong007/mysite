@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mysite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+body{
+  display:block;
+}
+#navbardrop{
+  font-size:2vw;
+}
+#add{
+  float:right;
+  margin-left:1vw;
+  margin-right:1vw;
+  margin-bottom:1vw;
+}
+#search{
+  margin-top:7vw;
+}
+.table-fixed{
+    height:30vw;
+    overflow-y:auto;
+    width: 100vw;
+}
+@media (max-width: 750px)
+{
+  .table-fixed{
+    height:40vw;
+    overflow-y:auto;
+    width: 100vw;
+}
+
+#add{
+  margin-top:10vw;
+  margin-left:1vw;
+  margin-right:1vw;
+  margin-bottom:1vw;
+}
+#back{
+  margin:1vw;
+}
+
+#search{
+  margin-top:10vw;
+}
+}
+</style>
+  </head>
+
+<header>            
+  <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top">
+                    
+    <a class="navbar-brand" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+   <div class="collapse navbar-collapse" id="collapsibleNavbar">         
+    <ul class="navbar-nav mr-auto" >
+          <li class="nav-item active">
+           <a class="nav-link " href=""><b>Dashboard</b></a>
+          </li>
+          <li class="nav-item dropdown">
+                <a class="nav-link  dropdown-toggle"  data-toggle="dropdown" href="#"><b>Users</b></a>
+                <div class="dropdown-menu ">
+                        <a class="dropdown-item" href="users/">Users List</a>
+                        <a class="dropdown-item" href="users/add">Add User</a>
+                      </div>
+          </li>
+          <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
+                <div class="dropdown-menu ">
+                        <a class="dropdown-item" href="users/tasks/">Tasks List</a>
+                        <a class="dropdown-item" href="users/tasks/add">Add Taks</a>
+                      </div>   
+            </li>
+    </ul>   
+    <ul class="nav navbar-nav" > 
+          <li class="nav-item">
+          <li class="nav-item dropdown dropleft">
+                <a class="nav-link  dropdown-toggle" data-toggle="dropdown" id="navbardrop" href="#"><b><i class="fa fa-gear"></i></b></a> 
+<div class="dropdown-menu ">
+<a class="dropdown-item" href="#">Logs</a>
+<a class="dropdown-item" href="#">Logout</a>
+</div>
+            </li>
+        </ul>
+    </div>
+      </nav></header>
+<main>
+        <div  >
+          <a href="add/" class="btn btn-outline-success" id="add" > + Add</a>
+          <a href="" class=""></a>
+    </div>
+      <div class="container form-group" >
+          <input type="text" maxlength="30" class="form-control" placeholder="Search.." id="search" name="search">
+      </div>  
+  <div  align="center" class="container table-fixed">
+      <table class="table table-sm table-striped  table-hover table-borderless">
+<thead class="thead-dark">
+    <tr class="top">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Date</th>
+        <th>Source</th>
+        <th>Destination1</th>
+        <th>Destination2</th>
+        <th>Destination3</th>
+        <th>Destination4</th>
+        <th>Distance</th>
+        <th>Petrol Price</th>
+        <th>Total Cost</th>
+        <th>Bill</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr class="table-fixed">
+    </thead>
+    {% for item in travel %}
+    <tr class="filter">
+        <td>{{ item.tid }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.date|date:'d-m-Y' }}</td>
+        <td>{{ item.source }}</td>
+        <td>{{ item.destination1 }}</td>
+        <td>{{ item.destination2 }}</td>
+        <td>{{ item.destination3 }}</td>
+        <td>{{ item.destination4 }}</td>
+        <td>{{ item.distance }}</td>
+        <td>{{ item.petrol_price }}</td>
+        <td>{{ item.total_cost }}</td>
+        <td><a href="media/{{ item.bill }}">{{ item.bill }}</a></td>
+    <td><a href="/edit/{{ item.tid }}/"  id="edit" class="btn btn-outline-secondary">Edit</a></td>
+    <td><button value="{{ item.tid }}" id="delete" class="btn btn-outline-danger" data-toggle="modal" data-target="#Mdelete">Delete</button></td>
+    </tr>
+    {% endfor %}
+</table></div>
+<button value="{{ item.tid }}" id="back" style="margin-left:2vw;" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Mdelete">Back</button>
+<div class="modal fade" id="Mdelete">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Delete</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+              Do you wish to Delete?
+            </div>
+            <div class="modal-footer">
+              <button id="delete1" class="btn btn-outline-secondary">Delete</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+    </div>  
+    <script>
+    $(document).ready(function(){
+        $("#delete1").on('click',function(){
+           del="delete/"+$("#delete").val();
+           $.ajax({
+               url: del,
+               type : 'GET',
+               data : {}
+           }).done(function(response){
+            location.reload();
+           });
+           $
+        });
+    });</script>   
+           <script>
+              $(document).ready(function(){
+                $("#search").on("keyup", function() {
+                  var value = $(this).val().toLowerCase();
+                  $(".filter").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                  });
+                });
+              });
+              </script>
+    <div id="result"></div>   
+    </main>
+    <footer class="container-fluid text-light bg-primary fixed-bottom" >copyright<br> </footer>
+</body>
+</html>
