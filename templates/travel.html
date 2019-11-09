@@ -65,21 +65,21 @@ body{
         </button>
    <div class="collapse navbar-collapse" id="collapsibleNavbar">         
     <ul class="navbar-nav mr-auto" >
-          <li class="nav-item active">
-           <a class="nav-link " href=""><b>Dashboard</b></a>
+          <li class="nav-item ">
+           <a class="nav-link " href="/"><b>Dashboard</b></a>
           </li>
           <li class="nav-item dropdown">
                 <a class="nav-link  dropdown-toggle"  data-toggle="dropdown" href="#"><b>Users</b></a>
                 <div class="dropdown-menu ">
-                        <a class="dropdown-item" href="users/">Users List</a>
-                        <a class="dropdown-item" href="users/add">Add User</a>
+                        <a class="dropdown-item" href="/users/">Users List</a>
+                        <a class="dropdown-item" href="/users/add">Add User</a>
                       </div>
           </li>
-          <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
+          <li class="nav-item dropdown active">
+                <a class="nav-link  dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
                 <div class="dropdown-menu ">
-                        <a class="dropdown-item" href="users/tasks/">Tasks List</a>
-                        <a class="dropdown-item" href="users/tasks/add">Add Taks</a>
+                        <a class="dropdown-item" href="/users/tasks/">Tasks List</a>
+                        <a class="dropdown-item" href="/users/tasks/add">Add Taks</a>
                       </div>   
             </li>
     </ul>   
@@ -143,7 +143,7 @@ body{
     </tr>
     {% endfor %}
 </table></div>
-<button value="{{ item.tid }}" id="back" style="margin-left:2vw;" class="btn btn-outline-secondary" data-toggle="modal" data-target="#Mdelete">Back</button>
+<a id="back" style="margin-left:2vw;" class="btn btn-outline-secondary" href="/">Back</a>
 <div class="modal fade" id="Mdelete">
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">

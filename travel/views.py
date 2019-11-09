@@ -9,7 +9,14 @@ def travel_list(request):
      context={'travel':travel.objects.all()}
      return render(request,'travel.html',context)
 
-
+def stor(dat): 
+         arr = [] 
+         if(dat != "None" or False): 
+           arr = dat.split(',')
+           new = arr[0]
+         else:
+           new = dat   
+         return new  
      
 def travel_add(request):
     if request.method == "POST" :
@@ -92,11 +99,3 @@ def destination_edit(request,tid):
 def destination_delete(request,tid):
     return render(request,'destinationdelete.html')
 
-    def stor(dat): 
-         arr = [] 
-         if(dat != "None" or False): 
-           arr = dat.split(',')
-           new = arr[0]
-         else:
-           new = dat   
-         return new  
