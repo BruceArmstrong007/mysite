@@ -23,7 +23,7 @@
 <body>
     <header></header>
     <main class="container">
-        <h2>Add travel</h2>
+        <h2>Add Task</h2>
     <form method="post" id="form1" class="needs-validation" action="." enctype="multipart/form-data" novalidate>{% csrf_token %}
         <div class="form-group">
             <label for="name"><b>Name<span class="text-danger">*</span>:</b></label>
@@ -161,24 +161,24 @@
                         });
                       }, false);
                     })();
-     </script>
-        <script>
-        $(document).ready(function (e) {
- $("#form1").on('submit',(function(e) {
-  e.preventDefault();
-  $.ajax({
-         url: "",
-   type: "POST",
-   data:  new FormData(this),
-   contentType: false,
-         cache: false,
-   processData:false,
-    }).done(function(response){ 
-                $("#result").html(response);
-                location.reload();
-              });
- }));
-});</script>
+     </script>  <script>      
+          $(document).ready(function(){        
+          $("#form1").submit(function(event){
+            event.preventDefault(); //prevent default action 
+            var post_url = ""; //get form action url //get form GET/POST method
+            var form_data = $(this).serialize(); //Encode form elements for submission
+            var method="POST";
+            $.ajax({
+              url : post_url,
+              type: method,
+              data : form_data
+            }).done(function(response){ 
+              $("#result").html(response);
+              location.reload();
+            });
+          }); 
+          });
+          </script>
         <script>
         $(document).ready(function(){
           $('#state').change(function(){

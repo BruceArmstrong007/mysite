@@ -18,7 +18,7 @@ class travel(models.Model):
 
 class distance(models.Model):
     tid = models.BigAutoField(max_length=5,null=False,unique=True,primary_key=True)
-    address = models.CharField(max_length=50,null=True,unique=True) 
+    address = models.CharField(max_length=50,null=True) 
     latitude = models.DecimalField(max_digits=10, decimal_places=6,null=True) 
     longitude = models.DecimalField(max_digits=10, decimal_places=6,null=True) 
 

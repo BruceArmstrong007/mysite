@@ -78,9 +78,17 @@ body{
                   <a class="nav-link  dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
                   <div class="dropdown-menu ">
                           <a class="dropdown-item" href="tasks/">Tasks List</a>
-                          <a class="dropdown-item" href="tasks/add">Add Taks</a>
+                          <a class="dropdown-item" href="tasks/add">Add Tasks</a>
                         </div>   
               </li>
+              
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Locations</b></a>
+              <div class="dropdown-menu ">
+                      <a class="dropdown-item" href="tasks/destination/">Locations List</a>
+                      <a class="dropdown-item" href="tasks/destination/add/">Add Location</a>
+                    </div>   
+          </li>
       </ul>   
       <ul class="nav navbar-nav" > 
             <li class="nav-item">
@@ -130,7 +138,7 @@ body{
         <td>{{item.dateofjoining|date:'d-m-Y'}}</td>
         <td>{{item.status}}</td>
         <td><a href="edit/{{ item.tid }}/"  id="edit" class="btn btn-outline-secondary">Edit</a></td>
-        <td><button value="{{ item.tid }}" id="delete" class="btn btn-outline-danger" data-toggle="modal" data-target="#Mdelete">Delete</button></td>
+        <td><button value="{{ item.tid }}" class="btn btn-outline-danger delete" data-toggle="modal" data-target="#Mdelete">Delete</button></td>
         </tr>
         {% endfor %}
     </table></div>
@@ -148,16 +156,19 @@ body{
                   Do you wish to Delete?
                 </div>
                 <div class="modal-footer">
-                  <button id="delete1" class="btn btn-outline-secondary">Delete</button>
+                  <button type="input" class="btn btn-outline-secondary delete1">Delete</button>
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
         </div>  
         <script>
-        $(document).ready(function(){
-            $("#delete1").on('click',function(){
-               del="delete/"+$("#delete").val();
+          $(document).ready(function(){
+            $(".delete").on('click',function(){
+              $(".delete1").val($(this).val());
+            });
+              $(".delete1").on('click',function(){
+                 del="delete/"+$(this).val();
                $.ajax({
                    url: del,
                    type : 'GET',

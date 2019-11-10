@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,QueryDict
 from django.http import HttpResponseRedirect
 from .models import travel,distance,petrol
 from users.models import user
+from logs.models import log
 
 
 def travel_list(request):
@@ -37,9 +38,14 @@ def travel_add(request):
       obj.total_cost=request.POST.get("total_cost") 
       if request.FILES:
        obj.bill=request.FILES['bill']
-      print(request.POST,request.FILES)
       obj.save()
       pet.save()
+      ob = log()
+      ob.log = obj.tid
+      ob.fields = QueryDict(request.body).dict()
+      ob.href = '/users/tasks/add/'
+      ob.go = '/logs/add/'
+      ob.save()      
       return HttpResponse("<script>alert('Successfully Added ');</script>")
     else:
      context={'name': user.objects.values('name'),'distance':distance.objects.all() , 'petrol_price':petrol.objects.all() } 
@@ -64,6 +70,12 @@ def travel_edit(request,tid):
       if request.FILES:
        edit.bill = bill=request.FILES["bill"]
        edit.save()
+      ob = log()
+      ob.log = tid
+      ob.fields = QueryDict(request.body).dict()
+      ob.href = '/users/tasks/edit/'
+      ob.go = '/logs/edit/'
+      ob.save()   
       return HttpResponse("<script>alert('Successfully Updated ');</script>")    
     else:
      context={'name': user.objects.values('name'),'distance':distance.objects.all() , 'petrol_price':petrol.objects.all() , 'old' : edit} 
@@ -73,6 +85,12 @@ def travel_edit(request,tid):
 def travel_delete(request,tid):
          dele=travel.objects.filter(tid = tid)
          dele.delete()
+         ob = log()
+         ob.log = tid
+         ob.fields = QueryDict(request.body).dict()
+         ob.href = '/users/tasks/'
+         ob.go = '/logs/delete/'
+         ob.save()  
          return HttpResponseRedirect('/users/tasks/')
 
 
@@ -82,20 +100,47 @@ def destination_list(request):
 
 
 def destination_add(request):
+    print(request.body)
     if request.method == "POST":
       obj = distance()
       obj.address = request.POST.get("address") 
       obj.latitude = request.POST.get("latitude") 
       obj.longitude = request.POST.get("longitude") 
       obj.save()
+      ob = log()
+      ob.log = obj.tid
+      ob.fields = QueryDict(request.body).dict()
+      ob.href = '/users/tasks/destination/add/'
+      ob.go = '/logs/add/'
+      ob.save()  
       return HttpResponse("<script>alert('Successfully Updated ');</script>")
     else:  
      return render(request,'destinationadd.html')    
 
 
 def destination_edit(request,tid):
-    return render(request,'destinationedit.html')    
+    edit = distance.objects.get(tid = tid)
+    if request.method == "POST":
+      distance.objects.filter(tid = tid).update(address=request.POST.get("address"),latitude=request.POST.get("latitude"),longitude=request.POST.get("longitude"))
+      ob = log()
+      ob.log = tid
+      ob.fields = QueryDict(request.body).dict()
+      ob.href = '/users/tasks/destination/edit/'
+      ob.go = '/logs/edit/'
+      ob.save()  
+      return HttpResponse("<script>alert('Successfully Updated ');</script>")
+    else:
+     context={'edit': edit} 
+     return render(request,'destinationedit.html',context)    
     
 def destination_delete(request,tid):
-    return render(request,'destinationdelete.html')
+         dele=distance.objects.filter(tid = tid)
+         dele.delete()
+         ob = log()
+         ob.log = tid
+         ob.fields = QueryDict(request.body).dict()
+         ob.href = '/users/tasks/destination/'
+         ob.go = '/logs/delete/'
+         ob.save() 
+         return HttpResponseRedirect('/users/tasks/destination/')
 

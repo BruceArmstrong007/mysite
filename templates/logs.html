@@ -7,6 +7,12 @@
     <title>mysite</title>
 </head>
 <body>
-    
+    {% for i in logs %}
+       <h3>{{ i.created_at|date:'d-m-Y' }}</h3>
+       <h3> {{ i.log }}</h3>
+       <h3> {{ i.fields }}</h3>
+       <h3>{{ i.href }} </h3>
+       <h3> {{ i.go }} </h3>
+    {% endfor %}
 </body>
 </html>
