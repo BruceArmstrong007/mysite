@@ -107,7 +107,7 @@
                 <div class="col">
                     <label for="state"><b>State:</b></label> 
                   <select name="state" class="form-control select3" id="state" name="state" required>
-                    <option selected readonly disabled>Select state..</option>
+                    <option readonly disabled>Select state..</option>
                     {% for i in petrol_price  %}
                     <option value="{{ i.state }},{{ i.petrol_price }}">{{ i.state }} : {{ i.petrol_price }}</option>
                   {% endfor %}

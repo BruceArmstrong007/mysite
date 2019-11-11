@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>mysite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+            body{
+            display: block;
+            }
+            #back{
+                margin-left:2vw ;
+            }
+            .flez{
+                display:flex;
+                flex-direction:column;
+                justify-content: space-evenly;
+            }
+            .right{
+                float:right;
+            }
+            </style>
+</head>
+<body align="center">
+    <div class="container">
+    <br>
+        <div class="container">
+        {% for i in logs %}
+        <b>Date: {{ i.created_at|date:'d-m-Y' }}</b>
+        <br>
+        <b>Log ID: {{ i.tid }}</b>
+        <b class="right">{% if i.href == '/users/tasks/destination/' %}
+        Deleted From Locations  
+        {% elif i.href == '/users/tasks/' %}
+        Deleted From Tasks  
+        {% elif i.href == '/users/' %}
+        Deleted From Users  
+        {% elif i.href == '/users/edit/' %}
+        Edited From Users  
+        {% elif i.href == '/users/tasks/edit/' %}
+        Edited From Tasks  
+        {% elif i.href == '/users/tasks/destination/edit/' %}
+        Edited From Locations  
+        {% elif i.href == '/users/add/' %}
+        Added To Users  
+        {% elif i.href == '/users/tasks/add/' %}
+        Added To Tasks  
+        {% elif i.href == '/users/tasks/destination/add/' %}
+        Added To destinations  
+        {% endif %}
+        {% endfor %}</b>
+    </div>
+    <br>
+     <div class="container">
+        <div class="flez">
+            <table class="table table-sm table-striped  table-hover table-borderless">
+                    <thead class="thead-dark">
+    <tr><th>Previous Values</th></tr></thread>
+        {% for i in pvalue %}
+    <tr><td>{{ i }}</td></tr>
+        {% endfor %}
+    </table>  
+    </div>
+    <div class="flez">
+            <table class="table table-sm table-striped  table-hover table-borderless">
+                    <thead class="thead-dark">
+                    <tr><th>Current Values</th></tr></thread>
+        {% for i in value %}
+        <tr><td>{{ i }}</td></tr>
+            {% endfor %}
+    </table>  
+        </div> 
+    </div>    
+    <a id="back"  class="btn btn-outline-secondary" href="/logs/">Back</a> 
+</div>
+</body>
+</html>

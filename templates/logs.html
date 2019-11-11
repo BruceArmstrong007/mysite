@@ -5,14 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>mysite</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    body{
+    display: block;
+    }
+    #delete{
+        float: right;
+        margin-right:2vw ;
+    }
+    </style>
 </head>
-<body>
+<body align="center">
+    <div class="container">
+    <h1>{{ log }}</h1>
     {% for i in logs %}
-       <h3>{{ i.created_at|date:'d-m-Y' }}</h3>
-       <h3> {{ i.log }}</h3>
-       <h3> {{ i.fields }}</h3>
-       <h3>{{ i.href }} </h3>
-       <h3> {{ i.go }} </h3>
+    <h3>{{ forloop.counter }}.) 
+    {% if i.href == '/users/tasks/destination/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Deleted the Location values of id : {{ i.log }}  <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="{{ i.href }}" class="btn btn-sm btn-outline-primary">Go to Location List...</a>
+    {% elif i.href == '/users/tasks/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Deleted the Task values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="{{ i.href }}" class="btn btn-sm btn-outline-primary">Go to Task List...</a>
+    {% elif i.href == '/users/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Deleted the User values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="{{ i.href }}" class="btn btn-sm btn-outline-primary">Go to User List...</a>
+    {% elif i.href == '/users/edit/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Edited the User values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="/users/" class="btn btn-sm btn-outline-primary">Go to User List...</a>
+    {% elif i.href == '/users/tasks/edit/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Edited the Task values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary"> More Details...</a> <a href="/users/tasks/" class="btn btn-sm btn-outline-primary">Go to Task List...</a>
+    {% elif i.href == '/users/tasks/destination/edit/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Edited the Location values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="/users/tasks/destination/" class="btn btn-sm btn-outline-primary">Go to Location List...</a>    
+    {% elif i.href == '/users/add/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Added the User values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="/users/" class="btn btn-sm btn-outline-primary">Go to User List...</a>
+    {% elif i.href == '/users/tasks/add/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Added the Task values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="/users/tasks/" class="btn btn-sm btn-outline-primary">Go to Task List...</a>
+    {% elif i.href == '/users/tasks/destination/add/' %}
+    On {{ i.created_at|date:'d-m-Y' }}  Admin Added the Location values of id : {{ i.log }}   <a href="{{ i.go }}{{ i.tid }}" class="btn btn-sm btn-outline-primary">More Details...</a> <a href="/users/tasks/destination/" class="btn btn-sm btn-outline-primary">Go to Location List...</a>    
+    {% endif %}</h3>
     {% endfor %}
+    {% if log != 'Logs are Empty' %}
+    <br>
+    <button id="delete" name="delete" class="btn btn-outline-danger delete">Clear Log</button>
+    <script>
+    $(document).ready(function(){
+              $("#delete").on('click',function(){
+                 del="";
+               $.ajax({
+                   url: del,
+                   type : 'GET',
+                   data : {'delete' : true },
+               }).done(function(response){
+                 $("#result").html(response);   
+                location.reload();
+               });
+               $
+            });
+        });</script>
+{% endif %}
+    <div id="result"></div>
+</div>
 </body>
 </html>

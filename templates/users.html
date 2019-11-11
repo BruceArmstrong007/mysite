@@ -46,6 +46,7 @@ body{
 }
 #back{
   margin:1vw;
+  margin-left:2vw;
 }
 
 #search{
@@ -78,7 +79,7 @@ body{
                   <a class="nav-link  dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
                   <div class="dropdown-menu ">
                           <a class="dropdown-item" href="tasks/">Tasks List</a>
-                          <a class="dropdown-item" href="tasks/add">Add Tasks</a>
+                          <a class="dropdown-item" href="tasks/add">Add Task</a>
                         </div>   
               </li>
               
@@ -95,8 +96,8 @@ body{
             <li class="nav-item dropdown dropleft">
                   <a class="nav-link  dropdown-toggle" data-toggle="dropdown" id="navbardrop" href="#"><b><i class="fa fa-gear"></i></b></a> 
   <div class="dropdown-menu ">
-  <a class="dropdown-item" href="#">Logs</a>
-  <a class="dropdown-item" href="#">Logout</a>
+      <a class="dropdown-item" target="_blank" href="/logs/">Logs</a>
+      <a class="dropdown-item" href="#">Logout</a>
   </div>
               </li>
           </ul>
@@ -142,7 +143,7 @@ body{
         </tr>
         {% endfor %}
     </table></div>
-    <a id="back" style="margin-left:2vw;" class="btn btn-outline-secondary" href="/">Back</a>
+    <a id="back"  class="btn btn-outline-secondary" href="/">Back</a>
 
   </div>  
     <div class="modal fade" id="Mdelete">

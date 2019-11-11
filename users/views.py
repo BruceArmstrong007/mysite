@@ -35,21 +35,22 @@ def add(request):
         return render(request,'useradd.html')      
 
 def delete(request,tid):
-         dele=user.objects.filter(tid = tid)
-         dele.delete()
+         dele=user.objects.get(tid = tid)
          ob = log()
          ob.log = tid
-         ob.fields = QueryDict(request.body).dict()
+         ob.pfields = "{ 'tid':'"+str(dele.tid)+"','name':'"+str(dele.name)+"','phone':'"+str(dele.phone)+"','address':'"+str(dele.address)+"','designation':'"+str(dele.designation)+"','bloodgroup':'"+str(dele.bloodgroup)+"','dateofjoining':'"+str(dele.dateofjoining)+"','status':'"+str(dele.status)+"' }"
          ob.href = '/users/'
          ob.go = '/logs/delete/'
          ob.save()
+         dele.delete()
          return HttpResponseRedirect('/users/')
 
 def edit(request,tid): 
     edit=user.objects.get(tid = tid) 
     if request.method == "POST":
-         user.objects.filter(tid = tid).update(name=request.POST.get("name"),phone=request.POST.get("phone"),address=request.POST.get("address"),designation=request.POST.get("designation"),bloodgroup=request.POST.get("bloodgroup"),dateofjoining=request.POST.get("dateofjoining"),status=request.POST.get("status"))  
          ob = log()
+         ob.pfields = "{ 'tid':'"+str(edit.tid)+"','name':'"+str(edit.name)+"','phone':'"+str(edit.phone)+"','address':'"+str(edit.address)+"','designation':'"+str(edit.designation)+"','bloodgroup':'"+str(edit.bloodgroup)+"','dateofjoining':'"+str(edit.dateofjoining)+"','status':'"+str(edit.status)+"' }"
+         user.objects.filter(tid = tid).update(name=request.POST.get("name"),phone=request.POST.get("phone"),address=request.POST.get("address"),designation=request.POST.get("designation"),bloodgroup=request.POST.get("bloodgroup"),dateofjoining=request.POST.get("dateofjoining"),status=request.POST.get("status"))  
          ob.log = tid
          ob.fields = QueryDict(request.body).dict()
          ob.href = '/users/edit/'

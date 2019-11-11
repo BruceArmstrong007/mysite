@@ -58,7 +58,7 @@ justify-content: center;
                             <a class="nav-link dropdown-toggle"  data-toggle="dropdown"  href="#"><b>Tasks</b></a>
                             <div class="dropdown-menu ">
                                     <a class="dropdown-item" href="users/tasks/">Tasks List</a>
-                                    <a class="dropdown-item" href="users/tasks/add">Add Tasks</a>
+                                    <a class="dropdown-item" href="users/tasks/add">Add Task</a>
                                   </div>   
                         </li>
                       <li class="nav-item dropdown">
@@ -74,7 +74,7 @@ justify-content: center;
                       <li class="nav-item dropdown dropleft">
                             <a class="nav-link  dropdown-toggle" data-toggle="dropdown" id="navbardrop" href="#"><b><i class="fa fa-gear" style="font-size:24px"></i></b></a> 
       <div class="dropdown-menu ">
-            <a class="dropdown-item" href="/logs/">Logs</a>
+            <a class="dropdown-item" target="_blank" href="/logs/">Logs</a>
             <a class="dropdown-item" href="#">Logout</a>
           </div>
                         </li>
@@ -93,7 +93,7 @@ justify-content: center;
                             <img class="card-img-top" src="static/users.svg" alt="Card image" style="width:6vw;">
                             <div class="card-body">
                               <h4 class="card-title">Users</h4>
-                              <p class="card-text">Total Number of users :<h3></h3></p>
+                              <p class="card-text">Total Number of users :{{ users }}<h3></h3></p>
                               <a href="users/" class="btn btn-primary">Goto Users</a>
                             </div>
                           </div>
@@ -103,12 +103,24 @@ justify-content: center;
                                 <img class="card-img-top" src="static/tasks.svg" alt="Card image" style="width:6vw;">
                                 <div class="card-body">
                                   <h4 class="card-title">Tasks</h4>
-                                  <p class="card-text">Total Number of Tasks :<h3></h3></p>
+                                  <p class="card-text">Total Number of Tasks :{{ travel }}<h3></h3></p>
                                   <a href="users/tasks/" class="btn btn-primary">Goto Tasks</a>
                                 </div>
                               </div>
             </div>
         </div>
+      </div>
+      <div class="container-fluid" align="center">
+              <div class="card" style="width:400px;border:0;">
+                      <img class="card-img-top" src="static/locations.svg" alt="Card image" style="width:6vw;">
+                      <div class="card-body">
+                        <h4 class="card-title">Locations</h4>
+                        <p class="card-text">Total Number of Locations :{{ distance }}<h3></h3></p>
+                        <a href="users/tasks/destination/" class="btn btn-primary">Goto Locations</a>
+                      </div>
+                    </div>
+  </div>
+</div>
         <br>
         
  </main>
